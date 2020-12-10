@@ -1,13 +1,13 @@
 function [ imgs ]  = getImgNames(directory)
 	path_to_imgs = strcat( directory,  '*jpg');
     
-    % obtine toate pozele
+    % Gets all photos
 	img_files = dir(path_to_imgs);
 	
-	% numarul de imagini
+	% Number of photos
 	n = length(img_files);
 	
-	% lungimea numelui unui fisier
+	% Length of a file's name
 	D = 1:10;
 	imgs(1:n, D) = 0;
 

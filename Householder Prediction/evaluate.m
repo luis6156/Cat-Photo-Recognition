@@ -2,19 +2,19 @@ function [percentage] = evaluate(path_to_testset, w, histogram, count_bins)
   cats = strcat(path_to_testset, 'cats/');
   not_cats = strcat(path_to_testset, 'not_cats/');
   
-  % Formez matricele cu calea catre fisiere
+  % Create matrix with the path of the files
   catsMatrix = strcat(cats, getImgNames(cats));
   notCatsMatrix = strcat(not_cats, getImgNames(not_cats));
   
   [sizeCats aux] = size(catsMatrix);
   [sizeNotCats aux] = size(notCatsMatrix);
   
-  % Initializez X, numarul de coloane si numarul total de poze
+  % Initialize X, number of columns and total number of photos
   columns = 3 * count_bins;
   total = sizeCats + sizeNotCats;
   X = zeros(total, columns);
   
-  % Populez matricea X cu histogramele potrivite si verific output-ul
+  % Populate matrix X with the right histograms and verify output
   if strcmp(histogram, 'HSV')
     for i = 1:sizeCats
       X(i, :) = hsvHistogram(catsMatrix(i, :), count_bins);
@@ -24,7 +24,7 @@ function [percentage] = evaluate(path_to_testset, w, histogram, count_bins)
     endfor
     % Bias
     X(:, columns + 1) = 1;
-    % Verificarea output-ului
+    % Verify output
     y = w' * X';
     ok = sum(y(1:sizeCats) >= 0);
     ok += sum(y(sizeCats + 1:total) < 0);
@@ -37,12 +37,14 @@ function [percentage] = evaluate(path_to_testset, w, histogram, count_bins)
     endfor
     % Bias
     X(:, columns + 1) = 1;
-    % Verificarea output-ului
+    % Verify output
     y = w' * X';
     ok = sum(y(1:sizeCats) >= 0);
     ok += sum(y(sizeCats + 1:total) < 0);
   endif
   
-  % Calculez procentajul
+  % Calculate the percentage
+  disp("Accuracy: ")
   percentage = ok / total
+  
 endfunction

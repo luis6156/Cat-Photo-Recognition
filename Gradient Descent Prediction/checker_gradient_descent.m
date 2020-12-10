@@ -9,5 +9,6 @@ function [score] = checker_part_4()
     fout = fopen("results", "w");
     fprintf(fout, "%.2f", score);
     fclose(fout);
+    disp("Total time: ")
     elapsed_time = etime (clock (), t0)
 endfunction

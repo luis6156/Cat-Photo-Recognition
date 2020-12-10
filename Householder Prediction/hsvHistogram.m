@@ -1,13 +1,13 @@
 function [sol] = hsvHistogram(path_to_image, count_bins)
   img = imread(path_to_image);
   
-  % Creez vectorul de intervale
+  % Create interval array
   val = 1.01 / count_bins;
   idx = 0:count_bins - 1;
   edges(idx + 1) = idx*val;
   edges(count_bins + 1) = 1.01;
   
-  % Creez vectori cu pixelii RGB
+  % Create RGB arrays
   redVector = img(:, :, 1);
   greenVector = img(:, :, 2);
   blueVector = img(:, :, 3);
@@ -15,7 +15,7 @@ function [sol] = hsvHistogram(path_to_image, count_bins)
   greenVector = greenVector(:)';
   blueVector = blueVector(:)';
   
-  % RGBHSV cu normalizare
+  % RGBHSV normalized
   redVector = (double)(redVector)./255;
   greenVector = (double)(greenVector)./255;
   blueVector = (double)(blueVector)./255;
@@ -39,19 +39,19 @@ function [sol] = hsvHistogram(path_to_image, count_bins)
   hueVector(idxBlue) = 60 * ((redVector(idxBlue) - greenVector(idxBlue)) ...
                          ./ delta(idxBlue) + 4);
                          
-  hueVector = hueVector ./ 360; % Vectorul Hue
+  hueVector = hueVector ./ 360; % Hue Array
   
   saturationVector(idxNull) = 0;
-  saturationVector = delta./C_max; % Vectorul Saturation
-  
-  valueVector = C_max; % Vectorul de Value
+  saturationVector = delta./C_max; % Saturation Array
+   
+  valueVector = C_max; % Value Array
   
   % Binning
   solH = histc(hueVector, edges);
   solS = histc(saturationVector, edges);
   solV = histc(valueVector, edges);
   
-  % Sterg ultimul element "0" din vectori
+  % Delete last element "0" from arrays
   solH(count_bins + 1) = [];
   solS(count_bins + 1) = [];
   solV(count_bins + 1) = [];

@@ -4,12 +4,12 @@ function [w] = learn(X, y)
   % Bias
   X(:, columns + 1) = 1;
   
-  % Aflu QR din Householder
+  % Get QR from Householder
   [Q R] = Householder(X);
   
-  % Formez Ax=b <=> Rx=Q'b
+  % Form Ax=b <=> Rx=Q'b
   y_new = Q' * y;
   
-  % Fac SST pe noua ecuatie
+  % Get "w" by using SSY on the new equation
   w = SST(R, y_new);
 end

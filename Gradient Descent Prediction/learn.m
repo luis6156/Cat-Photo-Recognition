@@ -2,19 +2,19 @@ function [w] = learn(X, y, lr, epochs)
   [rows columns] = size(X);
   batch_size = 64;
   
-  % Pregatesc coloanele
+  % Prepare columns
   X(:, 1:columns) = (X(:, 1:columns) - mean(X(:, 1:columns))) ...
                     ./ std(X(:, 1:columns));
    
   % Bias 
   X(:, columns + 1) = 1;
   
-  % W initial random
+  % W intialy random
   wMin = -0.1;
   wMax = 0.1;
   w = wMin + (wMax - wMin).*rand(columns + 1, 1);
   
-  % Algoritmul de learn
+  % Learn algorithm
   theta = lr / rows;
   for epoch = 1:epochs
     idx = randperm(rows);

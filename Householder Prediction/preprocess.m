@@ -2,20 +2,20 @@ function [X, y] = preprocess(path_to_dataset, histogram, count_bins)
   cats = strcat(path_to_dataset, 'cats/');
   not_cats = strcat(path_to_dataset, 'not_cats/');
   
-  % Formez matricele cu calea catre fisiere
+  % Form matrix with the path of the files
   catsMatrix = strcat(cats, getImgNames(cats));
   notCatsMatrix = strcat(not_cats, getImgNames(not_cats));
   
   [sizeCats aux] = size(catsMatrix);
   [sizeNotCats aux] = size(notCatsMatrix);
   
-  % Initializez X si Y
+  % Initialize X and Y
   X = zeros(sizeCats + sizeNotCats, 3 * count_bins);
   y(1:sizeCats) = 1;
   y(sizeCats + 1:sizeCats + sizeNotCats) = -1;
   y = y';
   
-  % Populez matricea X cu histogramele potrivite
+  % Populate matrix X with the right histograms
   if strcmp(histogram, 'HSV')
     for i = 1:sizeCats
       X(i, :) = hsvHistogram(catsMatrix(i, :), count_bins);

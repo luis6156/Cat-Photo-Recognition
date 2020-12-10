@@ -1,12 +1,12 @@
 function [Q, R] = Householder(A)
   [rows columns] = size(A);
   
-  % Initializari
+  % Initial data
   I = eye(rows);
   A_prime = A;
   Q = 1;
   
-  % Algoritmul Householder
+  % Householder Algorithm
   for i = 1:columns
     vector = A_prime(:, i);
   
